@@ -1,6 +1,7 @@
-import { biece } from "./piece";
+import { Piece } from "./piece";
 
-export interface board {
+
+export interface Board {
 
     id: number,
     turn: number,

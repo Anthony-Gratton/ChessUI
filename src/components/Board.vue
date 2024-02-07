@@ -24,4 +24,4 @@ const props = defineProps(['board'])
 const currentBoard = ref<board>(props.board)
 console.log(currentBoard.value)
 </script>
-  
+  ../models/Piece../models/Board

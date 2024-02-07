@@ -1,7 +1,10 @@
-export interface piece {
-    notation: string,
-    color: string,
-    name: string,
-    hasMoved: boolean,
+export class Piece {
+    color: string;
+    hasMoved: boolean = false;
+
+    public constructor(color: string) {
+        this.color = color;
+    }
+
 
 }
