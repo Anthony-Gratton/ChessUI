@@ -5,6 +5,6 @@ export interface Board {
 
     id: number,
     turn: number,
-    pieces: Piece[],
+    pieces: Piece[][],
 
 }
