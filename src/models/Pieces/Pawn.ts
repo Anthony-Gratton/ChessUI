@@ -3,15 +3,15 @@ import { Piece } from "../piece";
 export class Pawn extends Piece {
     notation: string = "P";
     name: string = "Pawn";
-    moves: number[];
+    hasUnlimitedRange: boolean = false;
+    moves: number[][];
     public constructor(color: string) {
         super(color)
-        if (this.color == "W") {
-            this.moves = [8]
+        if (this.color == "l") {
+            this.moves = [[1, 0]]
         }
         else {
-            this.moves = [-8]
+            this.moves = [[-1, 0]]
         }
-        [[0][1], [1][1]]
     }
 }

@@ -1,10 +1,16 @@
 import { Piece } from "./piece";
 
 
-export interface Board {
+export class Board {
 
-    id: number,
-    turn: number,
-    pieces: Piece[][],
+    id: number
+    turn: number
+    pieces: Piece[][]
+
+    public constructor(id: number, turn: number, pieces: Piece[][]) {
+        this.id = id;
+        this.turn = turn;
+        this.pieces = pieces;
+    }
 
 }

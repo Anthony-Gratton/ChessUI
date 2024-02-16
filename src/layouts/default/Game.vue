@@ -1,44 +1,18 @@
 <template>
     <div class="center pt-15">
-        <Board :board="currentBoard"></Board>
+        <VBoard :board="currentBoard"></VBoard>
     </div>
 </template>
   
 <script lang="ts" setup>
-import Board from '@/components/Board.vue';
+import VBoard from '@/components/Board.vue';
 import { ref } from 'vue';
-import { board } from '@/models/board';
+import { Board } from '@/models/Board';
+import { GetBaseBoard } from '@/constants/BaseBoard';
 
-const pieced = {
-    notation: "k",
-    color: "d",
-    name: "King",
-    hasMoved: false,
+const currentBoard = ref<Board>()
+currentBoard.value = new Board(0, 0, GetBaseBoard())
 
-}
-const piecel = {
-    notation: "k",
-    color: "l",
-    name: "King",
-    hasMoved: false,
-
-}
-const currentBoard = ref<board>({
-    id: 1,
-    turn: 0,
-    pieces: [],
-})
-
-for (let index = 0; index < 64; index++) {
-    if (index % 2 == 0) {
-        currentBoard.value.pieces.push(piecel)
-    }
-    else {
-        currentBoard.value.pieces.push(pieced)
-
-    }
-
-}
 // console.log(currentBoard.value)
 </script>
 

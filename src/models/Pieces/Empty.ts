@@ -3,5 +3,10 @@ import { Piece } from "../piece";
 export class Empty extends Piece {
     notation: string = "";
     name: string = "Empty";
-    override color: string = "";
+    moves: number[][] = []
+    hasUnlimitedRange: boolean = false;
+
+    constructor() {
+        super(""); // Call the superclass constructor with an empty string
+    }
 }

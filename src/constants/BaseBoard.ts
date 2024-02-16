@@ -8,16 +8,26 @@ import { Piece } from "@/models/piece";
 import { Empty } from "@/models/Pieces/Empty";
 
 
-export const BASE_BOARD: Piece[] = [new Rook("B"), new Knight("B"), new Bishop("B"), new Queen("B"), new King("B"), new Bishop("B"), new Knight("B"), new Rook("B"),
-new Pawn("B"), new Pawn("B"), new Pawn("B"), new Pawn("B"), new Pawn("B"), new Pawn("B"), new Pawn("B"), new Pawn("B"),
-new Empty("")]
-
 export function GetBaseBoard() {
-    let board: Piece[] = []
+    let board: Piece[][] = [[], [], [], [], [], [], [], []]
 
-    board.push(new Rook("B"), new Knight("B"), new Bishop("B"), new Queen("B"), new King("B"), new Bishop("B"), new Knight("B"), new Rook("B"))
+    board[0].push(new Rook("d"), new Knight("d"), new Bishop("d"), new Queen("d"), new King("d"), new Bishop("d"), new Knight("d"), new Rook("d"))
     for (let index = 0; index < 8; index++) {
-        board.push(new Pawn("B"))
+        board[1].push(new Pawn("d"))
+    }
+
+    for (let row = 2; row < 6; row++) {
+
+        for (let index = 0; index < 8; index++) {
+            board[row].push(new Empty())
+
+        }
+    }
+    for (let index = 0; index < 8; index++) {
+        board[6].push(new Pawn("l"))
 
     }
+    board[7].push(new Rook("l"), new Knight("l"), new Bishop("l"), new Queen("l"), new King("l"), new Bishop("l"), new Knight("l"), new Rook("l"))
+
+    return board
 }
