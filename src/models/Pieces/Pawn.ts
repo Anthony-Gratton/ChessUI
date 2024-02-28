@@ -7,6 +7,7 @@ export class Pawn extends Piece {
     moves: number[][];
     takeMoves: number[][];
     hasMovedAt: number = -99;
+    enPassantEnabled: boolean = false;
     public constructor(color: string) {
         super(color)
         if (this.color == "l") {

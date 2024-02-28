@@ -29,6 +29,7 @@ const currentBoard = ref<Board>(props.board)
 const possibleMoves = ref<number[][]>()
 const isPieceSelected = ref(false)
 const lastSelection = ref<number[]>()
+const lastClickedPiece = ref<Piece>()
 const boardColor = ref<string[][]>(props.boardColor)
 
 
@@ -36,16 +37,34 @@ const boardColor = ref<string[][]>(props.boardColor)
 
 function OnPieceClick(row: number, col: number) {
     let piece: Piece = getClickedPiece(row, col)
+    let colorDirection
     if (isPieceSelected.value == true && CheckIfClickIsMovable(row, col)) {
         if (lastSelection.value) {
-
             currentBoard.value.pieces[row - 1][col - 1] = currentBoard.value.pieces[lastSelection.value[0]][lastSelection.value[1]]
+            currentBoard.value.pieces[lastSelection.value[0]][lastSelection.value[1]] = new Empty()
             currentBoard.value.pieces[row - 1][col - 1].hasMoved = true
             if (currentBoard.value.pieces[row - 1][col - 1] instanceof Pawn) {
+                if (Math.abs((lastSelection.value[0] + 1) - row) == 2) {
+                    currentBoard.value.pieces[row - 1][col - 1].enPassantEnabled = true
+                }
                 currentBoard.value.pieces[row - 1][col - 1].hasMovedAt = currentBoard.value.turn
 
+                if (currentBoard.value.pieces[row - 1][col - 1].color == "l") {
+                    colorDirection = 1
+                }
+                else {
+                    colorDirection = -1
+                }
+                if (currentBoard.value.pieces[row - 1 + colorDirection][col - 1] instanceof Pawn) {
+                    if (currentBoard.value.pieces[row - 1 + colorDirection][col - 1].hasMovedAt == currentBoard.value.turn - 1) {
+                        if (currentBoard.value.pieces[row - 1 + colorDirection][col - 1].color != currentBoard.value.pieces[row - 1][col - 1].color) {
+                            currentBoard.value.pieces[row - 1 + colorDirection][col - 1] = new Empty()
+
+                        }
+                    }
+                }
             }
-            currentBoard.value.pieces[lastSelection.value[0]][lastSelection.value[1]] = new Empty()
+
             currentBoard.value.NextTurn()
             isPieceSelected.value = false
             possibleMoves.value = undefined
@@ -64,11 +83,11 @@ function OnPieceClick(row: number, col: number) {
             lastSelection.value = [row - 1, col - 1]
         }
     }
+    lastClickedPiece.value = piece
 }
 
 
 function getClickedPiece(row: number, col: number) {
-    console.log(currentBoard.value.pieces[row - 1][col - 1])
     return currentBoard.value.pieces[row - 1][col - 1]
 }
 
@@ -147,14 +166,9 @@ function getPossibleMoves(row: number, col: number, piece: Piece) {
                         possibleMoves.push([newRow, newCol])
                     }
                     else if (currentBoard.value.pieces[newRow - 1][newCol - 1] instanceof Empty) {
-                        if (currentBoard.value.pieces[baseRow - 1][baseRow - 1 + move[1]] instanceof Pawn) {
-                            console.log("test 1")
-                            console.log((currentBoard.value.pieces[baseRow - 1][baseRow - 1 + move[1]].hasMovedAt))
-                            console.log((currentBoard.value.turn - 1))
-                            if (currentBoard.value.pieces[baseRow - 1][baseRow - 1 + move[1]].hasMovedAt == currentBoard.value.turn - 1) {
-                                console.log("test 2")
-                                if (currentBoard.value.pieces[baseRow - 1][baseRow - 1 + move[1]].color != piece.color) {
-                                    console.log("test 3")
+                        if (currentBoard.value.pieces[baseRow - 1][baseCol - 1 + move[1]] instanceof Pawn) {
+                            if (currentBoard.value.pieces[baseRow - 1][baseCol - 1 + move[1]].hasMovedAt == currentBoard.value.turn - 1) {
+                                if (currentBoard.value.pieces[baseRow - 1][baseCol - 1 + move[1]].color != piece.color) {
                                     possibleMoves.push([newRow, newCol])
 
                                 }
